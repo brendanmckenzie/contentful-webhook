@@ -122,13 +122,9 @@ module.exports = function (event, context, callback) {
             var content = req.data.items[0];
             var contentType = content.sys.contentType.sys.id;
 
-            console.log(`contentType: ${contentType}`);
-            console.log(`available paths: ${JSON.stringify(req.config.paths, null, 2)}`);
-
             var template = dot.template(req.config.paths[contentType]);
 
             var it = content.fields;
-            it.includes = includes;
             it.fn = {
                 moment: require('moment'),
                 marked: require('marked')
