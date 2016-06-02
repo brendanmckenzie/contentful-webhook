@@ -1,0 +1,16 @@
+image: node:4.3
+
+before_script:
+  - apt-get update
+  - apt-get install -y zip python-pip
+  - pip install awscli
+
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - sh deploy.sh
+  only:
+    - master
