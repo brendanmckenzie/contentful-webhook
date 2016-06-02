@@ -136,7 +136,7 @@ module.exports = function (event, context, callback) {
             console.log(`... processed: ${req.path}`);
 
             next(null, req);
-        }
+        },
 
         function (req, next) {
             console.log('writing to target');
