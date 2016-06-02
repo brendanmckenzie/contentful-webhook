@@ -4,11 +4,7 @@ var dot = require('dot');
 var config = require('../config');
 var contentful = require('../contentful');
 
-var s3 = new AWS.S3({
-    region: config.region,
-    accessKeyId: config.accessKeyId,
-    secretAccessKey: config.secretAccessKey
-});
+var s3 = new AWS.S3();
 
 module.exports = function (event, context, callback) {
     var id = event.body.sys.id;
