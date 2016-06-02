@@ -144,8 +144,11 @@ module.exports = function (event, context, callback) {
                 secretAccessKey: req.config.target.secretAccessKey
             });
 
-            var key = ((req.config.target.keyPrefix || '') + '/' + req.path)
-                .replace(/^\//, '')
+            var prefix = req.config.target.keyPrefix || '';
+            var path = `${prefix}/${req.path}/index.html`;
+
+            var key = path
+                .replace(/^\/+/, '')
                 .replace(/\/{2,}/g, '/');
 
             targetS3.putObject({
