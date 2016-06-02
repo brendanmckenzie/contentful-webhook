@@ -117,6 +117,28 @@ module.exports = function (event, context, callback) {
         },
 
         function (req, next) {
+            console.log('processing path');
+
+            var item = req.data.items[0];
+            var contentType = item.sys.contentType.sys.id;
+            var content = req.data.items[0];
+
+            var template = dot.template(req.config.paths[contentType]);
+
+            var it = content.fields;
+            it.includes = includes;
+            it.fn = {
+                moment: require('moment'),
+                marked: require('marked')
+            };
+
+            req.path = template(it);
+            console.log(`... processed: ${req.path}`);
+
+            next(null, req);
+        }
+
+        function (req, next) {
             console.log('writing to target');
             var targetS3 = new AWS.S3({
                 region: req.config.target.region,
@@ -124,7 +146,7 @@ module.exports = function (event, context, callback) {
                 secretAccessKey: req.config.target.secretAccessKey
             });
 
-            var key = ((req.config.target.keyPrefix || '') + '/' + req.id)
+            var key = ((req.config.target.keyPrefix || '') + '/' + req.path)
                 .replace(/^\//, '')
                 .replace(/\/{2,}/g, '/');
 
