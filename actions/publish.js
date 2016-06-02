@@ -119,9 +119,11 @@ module.exports = function (event, context, callback) {
         function (req, next) {
             console.log('processing path');
 
-            var item = req.data.items[0];
-            var contentType = item.sys.contentType.sys.id;
             var content = req.data.items[0];
+            var contentType = content.sys.contentType.sys.id;
+
+            console.log(`contentType: ${contentType}`);
+            console.log(`available paths: ${JSON.stringify(req.config.paths, null, 2)}`);
 
             var template = dot.template(req.config.paths[contentType]);
 
