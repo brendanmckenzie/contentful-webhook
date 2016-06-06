@@ -10,7 +10,7 @@ module.exports = function (event, context, callback) {
     var id = event.body.sys.id;
     var space = event.body.sys.space.sys.id;
 
-    console.log(`publishing '${id}'' in space '${space}'`);
+    console.log(`publishing '${id}' in space '${space}'`);
     async.waterfall([
         function (next) {
             console.log(`looking up space: ${space}`);

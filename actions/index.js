@@ -1,4 +1,5 @@
 module.exports = {
   publish: require('./publish'),
-  unpublish: require('./unpublish')
+  unpublish: require('./unpublish'),
+  republish: require('./republish')
 }

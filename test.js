@@ -14,7 +14,7 @@ var event = {
       }
     }
   },
-  "topic": "ContentManagement.Entry.publish"
+  "topic": "ContentManagement.Entry.republish"
 };
 
 var context = {

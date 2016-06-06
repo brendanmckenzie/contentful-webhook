@@ -8,15 +8,32 @@ function getById(req, callback) {
     }
     http.get(params, function (res) {
         var body = '';
-        res.on('data', function(d) {
+        res.on('data', function (d) {
             body += d;
         });
-        res.on('end', function() {
+        res.on('end', function () {
+            callback(null, JSON.parse(body));
+        });
+    })
+}
+
+function getAllEntries(req, callback) {
+    var params = {
+        host: 'cdn.contentful.com',
+        path: `/spaces/${req.space}/entries?access_token=${req.apiKey}`
+    }
+    http.get(params, function (res) {
+        var body = '';
+        res.on('data', function (d) {
+            body += d;
+        });
+        res.on('end', function () {
             callback(null, JSON.parse(body));
         });
     })
 }
 
 module.exports = {
-    getById: getById
+    getById: getById,
+    getAllEntries: getAllEntries
 }
