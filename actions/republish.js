@@ -172,7 +172,7 @@ module.exports = function (event, context, callback) {
             });
 
             var prefix = req.config.target.keyPrefix || '';
-            async.eachLimit(req.data.items, 5, function (ent, callback) {
+            async.each(req.data.items, function (ent, callback) {
                 var path = req.paths.find(function (entA) { return entA.id === ent.sys.id });
                 var html = req.html.find(function (entA) { return entA.id === ent.sys.id });
 
