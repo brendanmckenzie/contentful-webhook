@@ -233,6 +233,49 @@ module.exports = function (event, context, callback) {
                 console.log('done');
                 next(null, { ok: true });
             });
+        },
+
+        function (req, next) {
+            if (req.config.target.cloudfront) {
+                console.log('creating cloudfront invalidation');
+
+                var cloudfront = new AWS.CloudFront({
+                    region: req.config.target.region,
+                    accessKeyId: req.config.target.accessKeyId ,
+                    secretAccessKey: req.config.target.secretAccessKey
+                });
+
+                cloudfront.createInvalidation({
+                    DistributionId: req.config.target.cloudfront.distribution,
+                    InvalidationBatch: {
+                        CallerReference: `contentful-webhook-${new Date().getTime()}-${parseInt(Math.random() * 10e8)}`,
+                        Paths: {
+                            Quantity: 1,
+                            Items: [ `/*` ]
+                        }
+                    }
+                }, function (err, data) {
+                    if (err) {
+                        next(`failed: ${err}`)
+                    }
+                    else {
+                        console.log('... created');
+                        next(null, {
+                            ok: true,
+                            bucket: req.bucket,
+                            key: req.key,
+                            invalidation: data.Invalidation.Id
+                        })
+                    }
+                })
+            }
+            else {
+                next(null, {
+                    ok: true,
+                    bucket: req.bucket,
+                    key: req.key
+                });
+            }
         }
     ], function (err, res) {
         if (err) {

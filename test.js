@@ -1,10 +1,10 @@
 var event = {
   "body": {
     "sys": {
-      "id": "6eEOFFPbMs4s4O0MQaUeym",
+      "id": "6SBHVTki1GagyM2cKkm0IE",
       "contentType": {
         "sys": {
-          "id": "project"
+          "id": "destination"
         }
       },
       "space": {
@@ -14,7 +14,7 @@ var event = {
       }
     }
   },
-  "topic": "ContentManagement.Entry.republish"
+  "topic": "ContentManagement.Entry.publish"
 };
 
 var context = {
