@@ -123,7 +123,15 @@ module.exports = function (event, context, callback) {
                     it.includes = includes;
                     it.fn = {
                         moment: require('moment'),
-                        marked: require('marked')
+                        marked: require('marked'),
+                        image: function (ent) {
+                            try {
+                                return includes.Asset[ent.sys.id].fields.file.url
+                            }
+                            catch (ex) {
+                                return null
+                            }
+                        }
                     };
 
                     var html = template(it);
