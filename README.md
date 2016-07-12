@@ -1,5 +1,7 @@
 # contentful-webhook
 
+An implementation of a AWS Lambda function that can handle Contentful webhooks to publish static HTML websites from templates stored in S3.
+
 ## Getting started
 
  1. Create a space on [Contentful](https://www.contentful.com/)
